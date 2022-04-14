@@ -1,9 +1,8 @@
-// On load, get user coords:    
-const coords = []                                                         
+// On load, get user coords:                                                            
 window.onload = async () => {
     const coords = await getCoords()
+    buildMap(coords)
 }
-
 // Get the user's coordinates:                                                              
 async function getCoords(){
     pos = await new Promise((resolve, reject) => {
@@ -11,18 +10,18 @@ async function getCoords(){
     })
     let coords = [pos.coords.latitude, pos.coords.longitude]
     return coords
-}
+}  
 
-console.log(getCoords());   
+// Create map:
+function buildMap(coords){
+    const myMap = L.map('map', {
+        center: coords,
+        zoom: 12,
+    });
+    // Add OpenStreetMap tiles:
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        minZoom: '15',
+    }).addTo(myMap)
+}                                                  
 
-// Create map:                                                       
-const myMap = L.map('map', {
-    center: coords,
-    zoom: 12,
-});
-
-// Add OpenStreetMap tiles:
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    minZoom: '15',
-}).addTo(myMap)
