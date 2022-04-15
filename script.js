@@ -2,6 +2,8 @@
 window.onload = async () => {
     const coords = await getCoords()
     buildMap(coords)
+    console.log(coords)
+    console.log(map)
 }
 // Get the user's coordinates:                                                              
 async function getCoords(){
@@ -14,7 +16,7 @@ async function getCoords(){
 
 // Create map:
 function buildMap(coords){
-    const myMap = L.map('map', {
+    const map = L.map('map', {
         center: coords,
         zoom: 12,
     });
@@ -22,6 +24,6 @@ function buildMap(coords){
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         minZoom: '15',
-    }).addTo(myMap)
-}                                                  
-
+    }).addTo(map)
+    const marker = L.marker(coords).addTo(map);
+}
